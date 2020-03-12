@@ -18,6 +18,11 @@
                 :file_list="$store.state.sidebarUploadBox_dataList"></Uploadbox>
         </div>
         <div class="sidebarIcon_list">
+            <div class="sidebarIcon_add">
+                <input v-model="website_url"  placeholder="url"/>
+                <input v-model="website_label" placeholder="label"/>
+                <button @click="addSidebarIcon">add</button>
+            </div>
             <SidebarIcon v-for="i in this.$store.state.sidebarWebsiteList" :label="i.label" :img="i.img" :url="i.url" ></SidebarIcon>
             <!-- 填充 -->
             <div style="width: 100%;height: 6px"></div>
@@ -36,6 +41,10 @@ export default {
         SidebarIcon,
         SidebarPop,
         Uploadbox
+    },
+    data: {
+        website_url: '',
+        website_label: ''
     },
     methods: {
         showPopAction (id) {
@@ -56,7 +65,24 @@ export default {
             } else if (id='history') {
                 return false
             }
-        }
+        },
+        addSidebarIcon () {
+            let self = this
+            self.$store.dispatch('addSidebarWebsiteList', {
+                "url":      self.website_url,
+                "label":  self.website_label,
+                "callback": () => {
+                    self.website_url = ''
+                    self.website_label = ''
+                },
+                "callback_err": (msg) => {
+                    // 通知
+                    self.$store.dispatch('showNotifyPop', msg)
+                    // 关闭通知
+                    setTimeout(() => { self.$store.dispatch('closeNotifyPop') }, 3000)
+                }
+            })
+        },
     },
     mounted () {
         this.$store.dispatch('requestSidebarWebsiteList', '')
@@ -120,5 +146,29 @@ export default {
     border-radius: 4px;
     /* margin-top: 0px; */
     overflow: auto;
+}
+.sidebarIcon_add {
+    display: flex;
+    padding-top: 11px;
+}
+.sidebarIcon_add> input {
+    width: 41%;
+    height: 30px;
+    border: 0;
+    outline: none;
+    border-radius: 4px;
+    background-color: #ddd;
+    color: #113034;
+    margin-right: 4px;
+    padding: 0 11px;
+}
+.sidebarIcon_add> button {
+    width: 18%;
+    height: 30px;
+    border-radius: 4px;
+    color: #113034;
+    border: 0;
+    outline: none;
+    background-color: #489799;
 }
 </style>

@@ -110,6 +110,34 @@ export const requestSidebarWebsiteList = (state, dat) => {
 
     })
 }
+// 添加侧边栏收藏网址
+export const addSidebarWebsiteList = (state, obj) => {
+    let dat    = obj['dat']
+    let commit = obj['commit']
+    axios.post(reqUrl + '/api/public/addProposeWebsite', qs.stringify({'url': dat.url, 'label': dat.label})).then((res) => {
+        if (res.data.stat === 1) {
+            commit('requestSidebarWebsiteList')
+            dat.callback()
+        } else {
+            dat.callback_err(res.data.msg)
+        }
+    }).catch((err) => {
+
+    })
+}
+// 删除侧边栏收藏网址
+export const deleteSidebarWebsiteList = (state, obj) => {
+    let dat    = obj['dat']
+    let commit = obj['commit']
+    axios.post(reqUrl + '/api/public/deleteProposeWebsite', qs.stringify({'url': dat.url})).then((res) => {
+        if (res.data.stat === 1) {
+            commit('requestSidebarWebsiteList')
+        } else {
+        }
+    }).catch((err) => {
+
+    })
+}
 // 请求 sidebarPop 历史
 export const requestSidebarPopHistory = (state, commit) => {
     state.sidebarPopData.id = 'history'

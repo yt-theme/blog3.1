@@ -7,7 +7,11 @@ export const checkLoginState = ({commit}, obj) => { commit('checkLoginState', {'
 // 请求桌面图标
 export const requestDesktopIconList = ({commit}, dat) => { commit('requestDesktopIconList', dat) }
 // 请求侧边栏收藏网址
-export const requestSidebarWebsiteList = ({commit}, dat) => { commit('requestSidebarWebsiteList', dat) }
+export const requestSidebarWebsiteList = ({commit}, dat) => { commit('requestSidebarWebsiteList',dat) }
+// 添加侧连栏收藏网址
+export const addSidebarWebsiteList = ({commit}, dat) => { commit('addSidebarWebsiteList',  { 'dat': dat, 'commit': commit}) }
+// 删除侧连栏收藏网址
+export const deleteSidebarWebsiteList = ({commit}, dat) => { commit('deleteSidebarWebsiteList',  { 'dat': dat, 'commit': commit}) }
 // 获取 sidebar pop 内容 (历史 / 新增)
 export const requestSidebarPopContent = ({commit}, dat) => {
     // 请求历史

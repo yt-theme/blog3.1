@@ -54,8 +54,13 @@ module.exports = function (obj) {
     // 删除 api/file/delete     
     new (require('./routes/file'))(router, mongodb_model_files, mongodb_model_article, async (req, res, next) => { await require('../middleware/authTokenAnalyz')(req, res, next, mongodb_model_user, TOKEN_SECRET) }).delete() // api/file/delete
 
-    // 建议网址 api/public/proposeWebsite
+    // ############################# 建议网址 ###############################
+    // 查询建议网址 api/public/proposeWebsite
     new (require('./routes/proposeWebsite'))(router, mongodb_model_proposeWebsite).query() // api/public/proposeWebsite
+    // 创建建议网址 api/public/addProposeWebsite
+    new (require('./routes/proposeWebsite'))(router, mongodb_model_proposeWebsite, async (req, res, next) => { await require('../middleware/authTokenAnalyz')(req, res, next, mongodb_model_user, TOKEN_SECRET) }).add() // api/public/proposeWebsite
+    // 删除建议网址 api/public/deleteProposeWebsite
+    new (require('./routes/proposeWebsite'))(router, mongodb_model_proposeWebsite, async (req, res, next) => { await require('../middleware/authTokenAnalyz')(req, res, next, mongodb_model_user, TOKEN_SECRET) }).delete() // api/public/proposeWebsite
 
     // ############################# 在线工具 ###############################
     // base64
