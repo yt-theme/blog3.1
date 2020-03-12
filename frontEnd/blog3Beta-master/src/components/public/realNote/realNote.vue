@@ -224,7 +224,6 @@ export default {
         },
         // 点击保存
         save () {
-            console.log("内容 =>", this.contentList)
             const self = this
             if (self.activeLeftLi) {
                 // clearInterval(self.timer)
