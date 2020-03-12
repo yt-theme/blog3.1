@@ -49,13 +49,13 @@
             </ul>
             <!-- 内容列表 -->
             <ul class="realNote_list_r">
-                <li v-show="ite._id === activeLeftLi" v-for="ite, ind in classContentList">
-                    <!-- <textarea v-model="contentList[ind].content" 
+                <li v-show="ite._id === activeLeftLi" v-for="(ite, ind) in classContentList">
+                    <textarea v-model="contentList[ind].content" 
                               @keydown="cancelAutoSave()"
-                              @keyup="contentChangeAndSave(ind)"></textarea> -->
+                              @keyup="contentChangeAndSave(ind)"></textarea>
 
-                    <CodeEditor v-model="contentList[ind].content"
-                                ></CodeEditor>
+                    <!-- <CodeEditor v-model="contentList[ind].content"
+                                ></CodeEditor> -->
                 </li>
             </ul>
         </div>
@@ -224,6 +224,7 @@ export default {
         },
         // 点击保存
         save () {
+            console.log("内容 =>", this.contentList)
             const self = this
             if (self.activeLeftLi) {
                 // clearInterval(self.timer)

@@ -36,4 +36,10 @@ export default {
     width: 100%;
     height: 100%;
 }
+.codeEditor_container> textarea {
+    display: block;
+    width: 100%;
+    height: 100%;
+    resize: none;
+}
 </style>
