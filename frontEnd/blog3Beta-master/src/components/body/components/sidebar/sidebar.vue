@@ -19,9 +19,9 @@
         </div>
         <div class="sidebarIcon_list">
             <div class="sidebarIcon_add">
-                <input v-model="website_url"  placeholder="url"/>
-                <input v-model="website_label" placeholder="label"/>
-                <button @click="addSidebarIcon">add</button>
+                <input v-model="website_url"  placeholder="Url"/>
+                <input v-model="website_label" placeholder="Label"/>
+                <button @click="addSidebarIcon">Add</button>
             </div>
             <SidebarIcon v-for="i in this.$store.state.sidebarWebsiteList" :label="i.label" :img="i.img" :url="i.url" ></SidebarIcon>
             <!-- 填充 -->
