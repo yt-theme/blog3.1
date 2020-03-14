@@ -397,6 +397,53 @@ export const realNote_saveChange = (state, dat) => {
     })
 }
 
+// todoList 列表
+export const query_todoList = (state, obj) => {
+    axios.post(reqUrl + '/api/queryTodoListByUserId').then((res) => {
+        if (res.data.stat === 1) {
+            state.todoList_data = res.data.data
+        }
+    })
+}
+// todoList 新增
+export const add_todoList = (state, obj) => {
+    let dats   = obj['dat']
+    let commit = obj['commit']
+    axios.post(reqUrl + '/api/addTodoList', qs.stringify({
+        "content":    dats["content"],
+        "start_time": dats["start_time"],
+        "end_time":   dats["end_time"],
+    })).then((res) => {
+        if (res.data.stat === 1) {
+            dats["callback"] && dats["callback"]()
+        }
+    })
+}
+// todoList 更新 -> is_ignore
+export const update_todoList = (state, obj) => {
+    let dats   = obj['dat']
+    let commit = obj['commit']
+    axios.post(reqUrl + '/api/updateTodoListByTodoId', qs.stringify({
+        "flag": dats["flag"],
+        "todo_id": dats["todo_id"]
+    })).then((res) => {
+        if (res.data.stat === 1) {
+            // commit('query_todoList')
+            dats["callback"] && dats["callback"]()
+        }
+    })
+}
+// todoList 删除
+export const delete_todoList = (state, obj) => {
+    let dats   = obj['dat']
+    let commit = obj['commit']
+    axios.post(reqUrl + '/api/deleteTodoListByTodoId', qs.stringify(dats)).then((res) => {
+        if (res.data.stat === 1) {
+            dats["callback"] && dats["callback"]()
+        }
+    })
+}
+
 // -------------------------------------------------
 // 设置新增 / 编辑 / 历史弹窗标题
 export const setSidebarPoptitle = (state, dat) => { state.sidebarPoptitle = dat }
@@ -502,3 +549,5 @@ export const currentClicked_iconPosition = (state, obj) => {
 export const set_onePageCount = (state, dat) => { state.onePageCount = dat }
 // realNote按钮点击后显示窗口
 export const set_realNoteShow_state = (state, dat) => { state.realNoteShow_state = dat }
+// todoList按钮点击后显示窗口
+export const set_todoListShow_state = (state, dat) => { state.todoListShow_state  = dat }

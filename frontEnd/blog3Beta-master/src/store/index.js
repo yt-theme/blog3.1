@@ -36,6 +36,8 @@ const state = {
     realNote_classTypeList: [],
     // realNote 内容列表
     realNote_classContentList: [],
+    // todoList 列表
+    todoList_data: [],
 
     // 数据 ----------------------------------
     // 当前页码
@@ -72,6 +74,8 @@ const state = {
     currentUploadFileDelete__id: '',
     // realNote窗口显示
     realNoteShow_state: false,
+    // todoList窗口显示
+    todoListShow_state: false
 }
 
 const store = new Vuex.Store({

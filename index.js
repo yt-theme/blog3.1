@@ -18,6 +18,8 @@ const mongodb_model_files          = require('./src/db/mongodb/mongodb').Mongodb
 const mongodb_model_proposeWebsite = require('./src/db/mongodb/mongodb').Mongodb_model_proposeWebsite()
 // 实时笔记
 const mongodb_model_realNote       = require('./src/db/mongodb/mongodb').Mongodb_model_realNote()
+// 待办事项
+const mongodb_model_todoList    = require('./src/db/mongodb/mongodb').Mongodb_model_todoList()
 
 // 配置文件
 const { SERVER_PORT, HTML_STATIC_DIR, INDEX_HTML_STATIC, UPLOAD_DIR_NAME, UPLOAD_DIR } = require('./config')
@@ -68,6 +70,7 @@ class Server {
             mongodb_model_files,          // files 表
             mongodb_model_proposeWebsite, // proposeWebsite 表
             mongodb_model_realNote,       // realNote 表
+            mongodb_model_todoList, // todoList表
         })
         // sockt server
         socket_model(groupInfo, socket_server)

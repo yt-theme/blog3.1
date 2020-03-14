@@ -9,6 +9,7 @@ module.exports = function (obj) {
     const mongodb_model_files          = obj.mongodb_model_files
     const mongodb_model_proposeWebsite = obj.mongodb_model_proposeWebsite
     const mongodb_model_realNote       = obj.mongodb_model_realNote
+    const mongodb_model_todoList    = obj.mongodb_model_todoList
 
     app.all('*', (req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*')
@@ -80,4 +81,15 @@ module.exports = function (obj) {
     new (require('./routes/realNote'))(router, mongodb_model_user, mongodb_model_realNote, async (req, res, next) => { await require('../middleware/authTokenAnalyz')(req, res, next, mongodb_model_user, TOKEN_SECRET) }).queryContentById() // api/realNote/queryContentById
     // 删除笔记按class_id api/realNote/deleteById
     new (require('./routes/realNote'))(router, mongodb_model_user, mongodb_model_realNote, async (req, res, next) => { await require('../middleware/authTokenAnalyz')(req, res, next, mongodb_model_user, TOKEN_SECRET) }).deleteById() // api/realNote/deleteById
+
+    // 待办事项
+    // 查询事项按userId api/queryTodoListByUserId
+    new (require('./routes/todoList'))(router, mongodb_model_user, mongodb_model_todoList, async (req, res, next) => { await require('../middleware/authTokenAnalyz')(req, res, next, mongodb_model_user, TOKEN_SECRET) }).queryByUserId() // api/queryTodoListByUserId
+    // 新增事项按userId api/addTodoList
+    new (require('./routes/todoList'))(router, mongodb_model_user, mongodb_model_todoList, async (req, res, next) => { await require('../middleware/authTokenAnalyz')(req, res, next, mongodb_model_user, TOKEN_SECRET) }).add() // api/addTodoList
+    // 更新事项按todoId api/updateTodoListByTodoId
+    new (require('./routes/todoList'))(router, mongodb_model_user, mongodb_model_todoList, async (req, res, next) => { await require('../middleware/authTokenAnalyz')(req, res, next, mongodb_model_user, TOKEN_SECRET) }).updateByTodoId() // api/updateTodoListByTodoId
+    // 删除事项按todoId api/deleteTodoListByTodoId
+    new (require('./routes/todoList'))(router, mongodb_model_user, mongodb_model_todoList, async (req, res, next) => { await require('../middleware/authTokenAnalyz')(req, res, next, mongodb_model_user, TOKEN_SECRET) }).deleteByTodoId() // api/deleteTodoListByTodoId
+
 }

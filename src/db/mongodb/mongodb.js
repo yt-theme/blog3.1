@@ -67,5 +67,14 @@ module.exports = {
             "collection_name":  "RealNote",
             "collection":       "realNote",
         })
+    },
+    // 待办事项
+    Mongodb_model_todoList: () => {
+        return new Model({
+            "mongoose":         mongoose,
+            "schema":           require('./schema/todoList')(mongoose),
+            "collection_name":  "TodoList",
+            "collection":       "todoList",
+        })
     }
 }

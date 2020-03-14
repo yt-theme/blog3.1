@@ -11,6 +11,8 @@
         <ViewPop v-if="$store.state.viewPopShow_state" :text="$store.state.monitor_content" title="server monitor"></ViewPop>
         <!-- 实时笔记 -->
         <RealNote v-show="this.$store.state.realNoteShow_state"></RealNote>
+        <!-- 待办事项 -->
+        <TodoList v-if="this.$store.state.todoListShow_state"></TodoList>
     </div>
 </template>
 
@@ -21,6 +23,7 @@ import window from './components/window/window'
 import notifyPop from '../public/notifyPop/notifyPop'
 import ViewPop from '../public/viewPop/viewPop'
 import RealNote from '../public/realNote/realNote'
+import TodoList from '../public/todoList/todoList'
 export default {
     components: {
         Desktop,
@@ -28,7 +31,8 @@ export default {
         window,
         notifyPop,
         ViewPop,
-        RealNote
+        RealNote,
+        TodoList
     },
     computed: {
         window_item () {

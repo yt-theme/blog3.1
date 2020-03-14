@@ -48,6 +48,14 @@ export const realNote_createClassType = ({commit}, dat) => { commit('realNote_cr
 export const realNote_deleteClassById = ({commit}, dat) => { commit('realNote_deleteClassById', dat) }
 // realNote 保存修改
 export const realNote_saveChange = ({commit}, dat) => { commit('realNote_saveChange', dat) }
+// todoList 列表
+export const query_todoList = ({commit}, dat) => { commit('query_todoList', { 'dat': dat, 'commit': commit }) }
+// todoList 新增
+export const add_todoList = ({commit}, dat) => { commit('add_todoList', { 'dat': dat, 'commit': commit}) }
+// todoList 更新 -> is_ignore
+export const update_todoList = ({commit}, dat) => { commit('update_todoList', { 'dat': dat, 'commit': commit}) }
+// todoList 删除
+export const delete_todoList = ({commit}, dat) => { commit('delete_todoList', { 'dat': dat, 'commit': commit}) }
 
 // --------------------------------------------------------------------
 
@@ -119,4 +127,8 @@ export const set_onePageCount = ({commit}, dat) => {
 // realNote按钮点击后显示窗口
 export const set_realNoteShow_state = ({commit}, dat) => {
     commit('set_realNoteShow_state', dat)
+}
+// todoList按钮点击后显示窗口
+export const set_todoListShow_state = ({commit}, dat) => {
+    commit('set_todoListShow_state', dat)
 }

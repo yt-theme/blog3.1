@@ -8,6 +8,7 @@
       </div>
       <div class="header_right">
           <RealNoteBtn></RealNoteBtn>
+          <TodoListBtn></TodoListBtn>
           <SysMonitorBtn></SysMonitorBtn>
           <ActionButtonArea></ActionButtonArea>
           <NotifyArea></NotifyArea>
@@ -23,6 +24,7 @@ import ActionButtonArea from './components/actionButtonArea/actionButtonArea'
 import SysMonitorBtn from './components/sysMonitorBtn/sysMonitorBtn'
 import Search from './components/search/search'
 import RealNoteBtn from './components/realNoteBtn/realNoteBtn'
+import TodoListBtn from './components/todoListBtn/todoListBtn'
 export default {
     components: {
         Logo,
@@ -31,7 +33,8 @@ export default {
         ActionButtonArea,
         SysMonitorBtn,
         Search,
-        RealNoteBtn
+        RealNoteBtn,
+        TodoListBtn
     }
 }
 </script>
