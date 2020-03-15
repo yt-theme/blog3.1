@@ -68,6 +68,12 @@
                     </li>
                     <li v-for="(ite, ind) in transSortType_obj.overed" :class="{'todoList_timeOverLi': ite.end_time<=(new Date().getTime())}">
                         <div>
+                            <h5>
+                                <template>
+                                    <i v-if="ite.flag==3" style="color: #419b9f">Compl</i>
+                                    <i v-else style="color: #b7b708">ignore</i>
+                                </template>
+                                 at: {{dateTimeFormatter(ite.overed_time)['dateTime']}}</h5>
                             <span>{{ite.content}}</span>
                         </div>
                         <div>
@@ -155,7 +161,7 @@ export default {
             // 用于存储有无 is_doing 数据
             let has_doingFlag = false
             // 用于存储时间最早的数据
-            let the_early_data = { "start_time": 9007199254740992, "_id": '' }
+            let the_early_data = { "end_time": 9007199254740992, "_id": '' }
             // 用于存储转换后分类
             let transSortType_obj = {'doing': [], 'waiting': [], 'overed': []}
 
@@ -164,8 +170,8 @@ export default {
             for(let i=0; i<val_arr.length; i++) {
 
                 // 起止时间
-                let tmp_start_time = Number(val_arr[i]['start_time'])
-                let tmp_end_time   = Number(val_arr[i]["end_time"])
+                let tmp_start_time = val_arr[i]['start_time']
+                let tmp_end_time   = val_arr[i]["end_time"]
 
                 // doing
                 if (val_arr[i]['flag'] == 1) {
@@ -175,7 +181,7 @@ export default {
                 }
                 // overed 结束 包含 flag==3 && flag==4
                 else if ((val_arr[i]['flag'] == 3) || (val_arr[i]['flag'] == 4)) {
-                    // 按开始时间排序 && 分类 -> overed
+                    // 分类 -> overed
                     transSortType_obj["overed"].push( val_arr[i] )
                 }
                 // waiting
@@ -186,13 +192,29 @@ export default {
 
 
                 // the_early_data 最早的数据 如果最早的数据是 overed 则用第二早的数据 依此类推
-                if ((tmp_start_time < the_early_data["start_time"]) && (val_arr[i]['flag']==2)) {
+                if ((tmp_end_time < the_early_data["end_time"]) && (val_arr[i]['flag']==2)) {
                     console.log("设置最早的数据 =>")
-                    the_early_data["start_time"] = tmp_start_time
-                    the_early_data["_id"]        = val_arr[i]["_id"]
+                    the_early_data["end_time"] = tmp_end_time
+                    the_early_data["_id"]      = val_arr[i]["_id"]
                 }
                 
             }
+
+
+            // --------------------------- 排序 ------------------------------
+            transSortType_obj["doing"]   = sortByEndOrOveredTime(1, transSortType_obj["doing"])
+            transSortType_obj["waiting"] = sortByEndOrOveredTime(1, transSortType_obj["waiting"])
+            transSortType_obj["overed"]  = sortByEndOrOveredTime(2, transSortType_obj["overed"])
+            // 按 end_time || overed_time 顺序排序方法 mode: 1, 2
+            function sortByEndOrOveredTime (mode, data_objArr) {
+                if (mode == 1) {
+                    return data_objArr.sort((obj1, obj2) => { return obj1["end_time"] - obj2["end_time"] })
+                }
+                if (mode == 2) {
+                    return data_objArr.sort((obj1, obj2) => { return obj2["overed_time"] - obj1["overed_time"] }) 
+                }
+            }
+            // --------------------------------------------------------------
 
             this.transSortType_obj = transSortType_obj
 
@@ -210,9 +232,11 @@ export default {
         // ---------------------------------------------------------------
         set_complete(ite_obj) {
             let self = this
+            let cur_timeStamp = new Date().getTime()
             this.$store.dispatch('update_todoList', { 
-                "todo_id": ite_obj["_id"],
-                "flag":    3,
+                "todo_id":     ite_obj["_id"],
+                "flag":        3,
+                "overed_time": cur_timeStamp,
                 "callback": () => {
                     self.$store.dispatch('query_todoList', {})
                 }
@@ -220,9 +244,11 @@ export default {
         },
         set_ignore(ite_obj) {
             let self = this
+            let cur_timeStamp = new Date().getTime()
             this.$store.dispatch('update_todoList', { 
                 "todo_id": ite_obj["_id"],
                 "flag":    4,
+                "overed_time": cur_timeStamp,
                 "callback": () => {
                     self.$store.dispatch('query_todoList', {})
                 }
@@ -231,8 +257,8 @@ export default {
         set_later(ite_obj) {
             let self = this
             this.$store.dispatch('update_todoList', { 
-                "todo_id": ite_obj["_id"],
-                "flag":    2,
+                "todo_id":     ite_obj["_id"],
+                "flag":        2,
                 "callback": () => {
                     self.$store.dispatch('query_todoList', {})
                 }
@@ -307,7 +333,7 @@ export default {
 .todoList_head> input {
     height: 26px;
     border: 0;
-    background-color: #eee;
+    background-color: #ddd;
     border-radius: 4px;
     color: #113236;
     outline: none;
@@ -348,7 +374,7 @@ export default {
 .todoList_doing li, .todoList_waiting li, .todoList_overed li {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     border-radius: 2px;
     background-color: #335858;
     padding: 7px;

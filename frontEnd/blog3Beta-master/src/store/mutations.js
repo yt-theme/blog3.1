@@ -423,10 +423,13 @@ export const add_todoList = (state, obj) => {
 export const update_todoList = (state, obj) => {
     let dats   = obj['dat']
     let commit = obj['commit']
-    axios.post(reqUrl + '/api/updateTodoListByTodoId', qs.stringify({
-        "flag": dats["flag"],
-        "todo_id": dats["todo_id"]
-    })).then((res) => {
+
+    let tmp_dataobj = {}
+    if (dats["flag"])        tmp_dataobj['flag']        = dats["flag"]
+    if (dats["todo_id"])     tmp_dataobj['todo_id']     = dats["todo_id"]
+    if (dats["overed_time"]) tmp_dataobj['overed_time'] = dats["overed_time"]
+
+    axios.post(reqUrl + '/api/updateTodoListByTodoId', qs.stringify(tmp_dataobj)).then((res) => {
         if (res.data.stat === 1) {
             // commit('query_todoList')
             dats["callback"] && dats["callback"]()

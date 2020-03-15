@@ -35,15 +35,16 @@ module.exports = class {
             if (analyz_stat) {
 
                 const content    = String(req.body.content)       || ''
-                const start_time = String(req.body.start_time)    || ''
-                const end_time   = String(req.body.end_time)      || ''
+                const start_time = Number(req.body.start_time)    || ''
+                const end_time   = Number(req.body.end_time)      || ''
                 
                 // 检索有没有重复url
                 self.mongodb_model_todoList.insertOne({
-                    "content":    content,
-                    "start_time": start_time,
-                    "end_time":   end_time,
-                    "user_id":    user_id,
+                    "content":     content,
+                    "start_time":  start_time,
+                    "end_time":    end_time,
+                    "overed_time": 9007199254740992,
+                    "user_id":     user_id,
                     // "is_doing":   false,
                     // "is_ignore":  false
                     "flag":       2
@@ -65,14 +66,16 @@ module.exports = class {
 
             if (analyz_stat) {
 
-                const todo_id   = req.body.todo_id  || ''
-                const flag      = req.body.flag
-                const end_time  = req.body.end_time
+                const todo_id     = req.body.todo_id  || ''
+                const flag        = req.body.flag
+                const end_time    = req.body.end_time
+                const overed_time = req.body.overed_time
 
                 // 需要设置的数据
                 let set_obj = {}
-                if (flag != undefined)     set_obj["flag"]     = flag
-                if (end_time != undefined) set_obj["end_time"] = end_time
+                if (flag != undefined)        set_obj["flag"]        = flag
+                if (end_time != undefined)    set_obj["end_time"]    = Number(end_time)
+                if (overed_time != undefined) set_obj["overed_time"] = Number(overed_time)
                 
                 // 检索有没有重复url
                 self.mongodb_model_todoList.updateOne({
