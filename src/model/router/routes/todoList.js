@@ -38,7 +38,6 @@ module.exports = class {
                 const start_time = Number(req.body.start_time)    || ''
                 const end_time   = Number(req.body.end_time)      || ''
                 
-                // 检索有没有重复url
                 self.mongodb_model_todoList.insertOne({
                     "content":     content,
                     "start_time":  start_time,
@@ -77,7 +76,6 @@ module.exports = class {
                 if (end_time != undefined)    set_obj["end_time"]    = Number(end_time)
                 if (overed_time != undefined) set_obj["overed_time"] = Number(overed_time)
                 
-                // 检索有没有重复url
                 self.mongodb_model_todoList.updateOne({
                     $and: [
                         { "_id":     todo_id },

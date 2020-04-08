@@ -70,7 +70,7 @@
                         <div>
                             <h5>
                                 <template>
-                                    <i v-if="ite.flag==3" style="color: #419b9f">Compl</i>
+                                    <i v-if="ite.flag==3" style="color: #489799">Compl</i>
                                     <i v-else style="color: #b7b708">ignore</i>
                                 </template>
                                  at: {{dateTimeFormatter(ite.overed_time)['dateTime']}}</h5>
