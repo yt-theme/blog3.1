@@ -17,7 +17,7 @@ Mongodb_model_proposeWebsite().insertMany([
 ]).then((v) => {
     console.log('mongodb init ========================>', v)
 }).catch((err) => {
-    console.log('mongodb init err ====================>', v)
+    console.log('mongodb init err ====================>', err)
 })
 // -----------------------------------------------
 

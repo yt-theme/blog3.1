@@ -12,11 +12,12 @@
 
 #1
 # project path
-cd /home/yt/pro/blog3/blog3.0/
+cd /home/stu/pro/blog3/blog3.0/
+
 
 #2
 # change to normal user
-su yt
+su stu
 
 #3
 # start project method

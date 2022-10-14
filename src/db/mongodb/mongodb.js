@@ -6,7 +6,7 @@ const { Model } = require('./model/model')
 // 配置文件
 const { MONGODB } = require('../../../config')
 
-mongoose.set('useCreateIndex', true);
+// mongoose.set('useCreateIndex', true);
 mongoose.connect(
     `mongodb://${MONGODB.URL}:${MONGODB.PORT}/${MONGODB.DBNAME}`,
     {
